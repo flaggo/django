@@ -1,0 +1,38 @@
+:orphan:
+
+===============
+入门
+===============
+
+不了解Django？ 或着不了解基本的Web开发？ 哈哈，你来对地方了：阅读本文档来快速了解并运行吧。
+
+.. toctree::
+   :maxdepth: 1
+
+   overview
+   install
+   tutorial01
+   tutorial02
+   tutorial03
+   tutorial04
+   tutorial05
+   tutorial06
+   tutorial07
+   reusable-apps
+   whatsnext
+   contributing
+
+.. seealso::
+
+    如果你是 Python_ 新手，你可能希望首先了解该语言的内容。 Django 100%地使用Python，
+    如果Python能让你聊以慰藉，那你能从Django中获得更多。
+
+    如果你刚开始编程，你可能需要从 `非程序员的Python资源列表`_ 开始。
+
+    如果你已经知道其他几种语言，并希望快速开始使用Python，我们建议您阅读 `深入Python`。 
+    如果这不符合你的风格，还有很多 `关于Python的书` 。
+
+    .. _python: https://python.org/
+    .. _非程序员的Python资源列表: https://wiki.python.org/moin/BeginnersGuide/NonProgrammers
+    .. _深入Python: http://www.diveintopython3.net/
+    .. _关于Python的书: https://wiki.python.org/moin/PythonBooks

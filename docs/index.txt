@@ -34,9 +34,10 @@ How the documentation is organized
 Django has a lot of documentation. A high-level overview of how it's organized
 will help you know where to look for certain things:
 
-* :doc:`Tutorials </intro/index>` take you by the hand through a series of
-  steps to create a Web application. Start here if you're new to Django or Web
-  application development. Also look at the ":ref:`index-first-steps`" below.
+* :doc:`教程 </intro/index-zh>` 通过一系列步骤带领您创建一个Web应用程序。 如果
+  你刚开始进行Django或Web应用程序开发，请从这里开始。 还可以看下面的
+  “:ref:`index-first-steps`”。
+  
 
 * :doc:`Topic guides </topics/index>` discuss key topics and concepts at a
   fairly high level and provide useful background information and explanation.
@@ -51,7 +52,7 @@ will help you know where to look for certain things:
 
 .. _index-first-steps:
 
-First steps
+第一步
 ===========
 
 Are you new to Django or to programming? This is the place to start!
