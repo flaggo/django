@@ -11,13 +11,13 @@
 
    overview
    install
-   tutorial01
+   tutorial01-zh
    tutorial02
-   tutorial03
+   tutorial03-zh
    tutorial04
-   tutorial05
+   tutorial05-zh
    tutorial06
-   tutorial07
+   tutorial07-zh
    reusable-apps
    whatsnext
    contributing
