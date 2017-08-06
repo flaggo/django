@@ -62,13 +62,13 @@ will help you know where to look for certain things:
   :doc:`安装 <intro/install>`
 
 * **Tutorial:**
-  :doc:`章节 1: 请求和相应 <intro/tutorial01-zh>` |
-  :doc:`章节 2: 模型和管理站点 <intro/tutorial02>` |
-  :doc:`章节 3: 视图和模板 <intro/tutorial03-zh>` |
-  :doc:`章节 4: 表单和通用视图 <intro/tutorial04>` |
-  :doc:`章节 5: 测试 <intro/tutorial05-zh>` |
-  :doc:`章节 6: 静态文件 <intro/tutorial06>` |
-  :doc:`章节 7: 定制管理站点 <intro/tutorial07-zh>`
+  :doc:`第1部分: 请求和响应 <intro/tutorial01-zh>` |
+  :doc:`第2部分: 模型和管理站点 <intro/tutorial02>` |
+  :doc:`第3部分: 视图和模板 <intro/tutorial03-zh>` |
+  :doc:`第4部分: 表单和通用视图 <intro/tutorial04>` |
+  :doc:`第5部分: 测试 <intro/tutorial05-zh>` |
+  :doc:`第6部分: 静态文件 <intro/tutorial06>` |
+  :doc:`第7部分: 定制管理站点 <intro/tutorial07-zh>`
 
 * **Advanced Tutorials:**
   :doc:`How to write reusable apps <intro/reusable-apps>` |

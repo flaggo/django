@@ -1,5 +1,5 @@
 =====================================
-编写你的第一个Django应用, 章节 5
+编写你的第一个Django应用, 第5部分
 =====================================
 
 This tutorial begins where :doc:`Tutorial 4 </intro/tutorial04>` left off.

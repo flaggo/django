@@ -10,15 +10,15 @@
    :maxdepth: 1
 
    overview-zh
-   install
+   install-zh
    tutorial01-zh
-   tutorial02
+   tutorial02-zh
    tutorial03-zh
-   tutorial04
+   tutorial04-zh
    tutorial05-zh
-   tutorial06
+   tutorial06-zh
    tutorial07-zh
-   reusable-apps
+   reusable-apps-zh
    whatsnext
    contributing
 
