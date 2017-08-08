@@ -1,88 +1,77 @@
 :orphan:
 
 ===================
-Quick install guide
+快速安装指南
 ===================
 
-Before you can use Django, you'll need to get it installed. We have a
-:doc:`complete installation guide </topics/install>` that covers all the
-possibilities; this guide will guide you to a simple, minimal installation
-that'll work while you walk through the introduction.
+您必须安装好 Django 才能使用它，我们有一个涵盖了所有安装细节的
+:doc:`安装完全指南 </topics/install>`
+本指南会带你完成满足本次教程所需的最简、最小化安装。
 
-Install Python
+安装Python
 ==============
 
-Being a Python Web framework, Django requires Python. See
-:ref:`faq-python-version-support` for details. Python includes a lightweight
-database called SQLite_ so you won't need to set up a database just yet.
+Django 作为一个 Python Web 框架，必须依赖 Python 。
+查看 :ref:`faq-python-version-support` 了解详情。 Python 标准库提供了一个
+轻量的数据库 SQLite_ ，所以您目前不需要准备任何数据库系统。
 
 .. _sqlite: https://sqlite.org/
 
-Get the latest version of Python at https://www.python.org/downloads/ or with
-your operating system's package manager.
+在 https://www.python.org/downloads/ 下载 Python 最新版，也可以通过您当前操作系统
+的包管理器进行安装。
 
-.. admonition:: Django on Jython
-
-    If you use Jython_ (a Python implementation for the Java platform), you'll
-    need to follow a few additional steps. See :doc:`/howto/jython` for details.
+.. admonition:: 在 Jython 上使用 Django
+    
+    如果您使用 Jython_ （ Python 在 Java 平台上的一种实现），您需要执行一些额外的步骤，
+    查看 :doc:`/howto/jython` 了解详情。
 
 .. _jython: http://www.jython.org/
 
-You can verify that Python is installed by typing ``python`` from your shell;
-you should see something like::
+您可以通过在命令行中输入 ``python`` 来验证是否安装成功，如果成功你可以看到下面的输出::
 
     Python 3.4.x
     [GCC 4.x] on linux
     Type "help", "copyright", "credits" or "license" for more information.
     >>>
 
-Set up a database
+准备数据库
 =================
 
-This step is only necessary if you'd like to work with a "large" database engine
-like PostgreSQL, MySQL, or Oracle. To install such a database, consult the
-:ref:`database installation information <database-installation>`.
+这个步骤仅在您希望使用一些诸如 PostgreSQL 、 MySQL 、 Oracle 等“重量级”的数据库时才需要被执行。
+要安装这类数据库，请参考 :ref:`database installation information <database-installation>` 。
 
-Remove any old versions of Django
+删除旧版 Django
 =================================
 
-If you are upgrading your installation of Django from a previous version, you
-will need to :ref:`uninstall the old Django version before installing the new
-version <removing-old-versions-of-django>`.
+如果您正在从一个旧版的 Django 升级到新版，请在安装新版前通过 :ref:`uninstall the old Django version before installing the new
+version <removing-old-versions-of-django>` 了解进一步详情。
 
-Install Django
+安装 Django
 ==============
 
-You've got three easy options to install Django:
+您可以通过下列三种途径轻松地完成 Django 的安装：
+  
+* :ref:`Install an official release <installing-official-release>`. 
+  这是最推荐大部分用户采用的安装方式。
 
-* :ref:`Install an official release <installing-official-release>`. This
-  is the best approach for most users.
-
-* Install a version of Django :ref:`provided by your operating system
-  distribution <installing-distribution-package>`.
+* 通过 :ref:`provided by your operating system
+  distribution <installing-distribution-package>` 安装指定版本的 Django 。
 
 * :ref:`Install the latest development version
-  <installing-development-version>`. This option is for enthusiasts who want
-  the latest-and-greatest features and aren't afraid of running brand new code.
-  You might encounter new bugs in the development version, but reporting them
-  helps the development of Django. Also, releases of third-party packages are
-  less likely to be compatible with the development version than with the
-  latest stable release.
+  <installing-development-version>`. 这种方式适合追求最新功能的开发者们，并且不担心
+  功能不稳定。 您可能在使用 Django 开发版时遇到 bug ，请报告它们以帮助 Django 变得更好。
+  此外，相比较稳定版，第三方包可能对开发版本的 Django 提供更弱的兼容支持。
 
-.. admonition:: Always refer to the documentation that corresponds to the
-    version of Django you're using!
+.. admonition:: 请您总是查阅和当前使用的 Django 版本相匹配的文档
 
-    If you do either of the first two steps, keep an eye out for parts of the
-    documentation marked **new in development version**. That phrase flags
-    features that are only available in development versions of Django, and
-    they likely won't work with an official release.
+    如果您选择了上面前两种方式，请留心那些标注了 **new in development version** 的文档。
+    这些文档标注了那些只在开发版的 Django 中才提供的功能，您无法在稳定版中使用。
 
-
-Verifying
+验证
 =========
 
-To verify that Django can be seen by Python, type ``python`` from your shell.
-Then at the Python prompt, try to import Django:
+为了验证在 Python 中已经可以使用 Django 了，在命令行中输入 ``python`` 启动 Python
+交互环境，并尝试导入 Django 模块：
 
 .. parsed-literal::
 
@@ -90,9 +79,9 @@ Then at the Python prompt, try to import Django:
     >>> print(django.get_version())
     |version|
 
-You may have another version of Django installed.
+说明您已经成功安装了那个版本的 Django 。
 
-That's it!
+结束
 ==========
 
-That's it -- you can now :doc:`move onto the tutorial </intro/tutorial01>`.
+您现在可以阅读 :doc:`move onto the tutorial </intro/tutorial01>` 。

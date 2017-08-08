@@ -59,7 +59,7 @@ will help you know where to look for certain things:
 
 * **From scratch:**
   :doc:`概览 <intro/overview-zh>` |
-  :doc:`安装 <intro/install>`
+  :doc:`安装 <intro/install-zh>`
 
 * **Tutorial:**
   :doc:`第1部分: 请求和响应 <intro/tutorial01-zh>` |
