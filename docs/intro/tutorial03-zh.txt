@@ -86,56 +86,43 @@ Django 通过 “URLconfs” 从 URL 获取到视图。而 URLconf 是将 URL �
         url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     ]
 
-Take a look in your browser, at "/polls/34/". It'll run the ``detail()``
-method and display whatever ID you provide in the URL. Try
-"/polls/34/results/" and "/polls/34/vote/" too -- these will display the
-placeholder results and voting pages.
+现在去浏览器中访问“/polls/34/”。它将运行 ``detail()`` 方法，然后在页面中显示你在
+url里提供的ID。尝试访问“/polls/34/results/”和“/polls/34/vote/” —— 它们将分别
+显示预设结果和投票页面。
 
-When somebody requests a page from your website -- say, "/polls/34/", Django
-will load the ``mysite.urls`` Python module because it's pointed to by the
-:setting:`ROOT_URLCONF` setting. It finds the variable named ``urlpatterns``
-and traverses the regular expressions in order. After finding the match at
-``'^polls/'``, it strips off the matching text (``"polls/"``) and sends the
-remaining text -- ``"34/"`` -- to the 'polls.urls' URLconf for further
-processing. There it matches ``r'^(?P<question_id>[0-9]+)/$'``, resulting in a
-call to the ``detail()`` view like so::
+当有人访问网站的一个页面 —— 如“/polls/34/”时，Django会加载 ``mysite.urls`` Python
+模块，因为它通过 :setting:`ROOT_URLCONF` 配置指定。它找到 ``urlpatterns`` 变量，
+按顺序对各项进行正则匹配。当它匹配到了 ``'^polls/'`` ，就剥离出匹配到的文本
+（``"polls/"``），然后将剩下的文本 ``"34/"``，传递给 “polls.urls” URLconf 进行
+下一步的处理。在polls.urls，又匹配到了 ``r'^(?P<question_id>[0-9]+)/$'``，
+最终结果就是调用该模式对应的 ``detail()`` 视图，如::
 
     detail(request=<HttpRequest object>, question_id='34')
 
-The ``question_id='34'`` part comes from ``(?P<question_id>[0-9]+)``. Using parentheses
-around a pattern "captures" the text matched by that pattern and sends it as an
-argument to the view function; ``?P<question_id>`` defines the name that will
-be used to identify the matched pattern; and ``[0-9]+`` is a regular expression to
-match a sequence of digits (i.e., a number).
+``question_id='34'`` 的部分来自 ``(?P<question_id>[0-9]+)``。使用模式周围的括号“捕获”
+该模式匹配到的文本，并将其作为参数发送到视图函数; ``?P<question_id>`` 定义用于标识匹配到的
+模式的名字； ``[0-9]+`` 是匹配一串数字的正则表达。
 
-Because the URL patterns are regular expressions, there really is no limit on
-what you can do with them. And there's no need to add URL cruft such as
-``.html`` -- unless you want to, in which case you can do something like
-this::
+因为 URL 模式是正则表达式，你如何使用它们没有什么限制。不需要添加像 ``.html`` 这样繁琐的URL 
+—— 除非你执意这么做，在这种情况下你可以这样做::
 
     url(r'^polls/latest\.html$', views.index),
 
-But, don't do that. It's silly.
+但是，不要这样做。这比较愚蠢。
 
-Write views that actually do something
+编写拥有实际功能的视图
 ======================================
 
-Each view is responsible for doing one of two things: returning an
-:class:`~django.http.HttpResponse` object containing the content for the
-requested page, or raising an exception such as :exc:`~django.http.Http404`. The
-rest is up to you.
+每个视图函数只负责处理两件事中的一件：返回一个包含所请求页面内容的 :class:`~django.http.HttpResponse`
+对象，或者抛出一个诸如 :exc:`~django.http.Http404` 的异常。该如何去做这两件事，就看你自己的想法了。
 
-Your view can read records from a database, or not. It can use a template
-system such as Django's -- or a third-party Python template system -- or not.
-It can generate a PDF file, output XML, create a ZIP file on the fly, anything
-you want, using whatever Python libraries you want.
+您的视图可以从数据库读取记录，也可以不读取。它可以使用模板系统，如 Django 的或第三方Python模板系统，
+或着不使用。它可以使用任何你想要的Python库，生成 PDF 文件，输出 XML，即时创建 ZIP 文件，和任何你想要的。
 
-All Django wants is that :class:`~django.http.HttpResponse`. Or an exception.
+Django只要求返回的是 :class:`~django.http.HttpResponse`，或者是个异常。
 
-Because it's convenient, let's use Django's own database API, which we covered
-in :doc:`Tutorial 2 </intro/tutorial02>`. Here's one stab at a new ``index()``
-view, which displays the latest 5 poll questions in the system, separated by
-commas, according to publication date:
+为了方便，让我们使用 Django 自身的数据库 API，在 :doc:`Tutorial 2 </intro/tutorial02-zh>`
+有所提及。下面是一个新的 ``index()`` 视图，它显示系统中最新发布的5条投票问题记录，用逗号分隔：
 
 .. snippet::
     :filename: polls/views.py
@@ -150,41 +137,33 @@ commas, according to publication date:
         output = ', '.join([q.question_text for q in latest_question_list])
         return HttpResponse(output)
 
-    # Leave the rest of the views (detail, results, vote) unchanged
+    # 保持其他的视图（detail, results, vote）不变
 
-There's a problem here, though: the page's design is hard-coded in the view. If
-you want to change the way the page looks, you'll have to edit this Python code.
-So let's use Django's template system to separate the design from Python by
-creating a template that the view can use.
+这里有一个问题：页面的设计被硬编码在视图中。 如果你想更改页面的外观，就得编辑这段 Python 代码。
+因此，让我们来使用 Django 的模板系统，通过创建一个可被视图使用的模板，将页面的设计从
+Python 中分离出来。
 
-First, create a directory called ``templates`` in your ``polls`` directory.
-Django will look for templates in there.
+首先，在你的 ``polls`` 目录下创建一个叫做 ``templates`` 的目录。Django将在这里查找模板。
 
-Your project's :setting:`TEMPLATES` setting describes how Django will load and
-render templates. The default settings file configures a ``DjangoTemplates``
-backend whose :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` option is set to
-``True``. By convention ``DjangoTemplates`` looks for a "templates"
-subdirectory in each of the :setting:`INSTALLED_APPS`.
+项目中的 :setting:`TEMPLATES` 配置描述了 Django 如何加载和渲染模板。默认的配置文件配置
+``DjangoTemplates``，其 :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` 被设置为True。
+为了方便， ``DjangoTemplates`` 会在 :setting:`INSTALLED_APPS` 所包含的每个应用的目录下
+查找名为“templates”的子目录。
 
-Within the ``templates`` directory you have just created, create another
-directory called ``polls``, and within that create a file called
-``index.html``. In other words, your template should be at
-``polls/templates/polls/index.html``. Because of how the ``app_directories``
-template loader works as described above, you can refer to this template within
-Django simply as ``polls/index.html``.
+在刚刚创建的 ``templates`` 目录中，创建另一个名为 ``polls`` 的目录，并在里面创建一个名为
+``index.html`` 的文件。换句话说，你的模板应该是 ``polls/templates/polls/index.html``。
+由于 ``app_directories`` 模板加载器如上所述工作，因此您可以在 Django 中简单地引用此模板为
+``polls/index.html``。
 
-.. admonition:: Template namespacing
+.. admonition:: 模板命名空间
 
-    Now we *might* be able to get away with putting our templates directly in
-    ``polls/templates`` (rather than creating another ``polls`` subdirectory),
-    but it would actually be a bad idea. Django will choose the first template
-    it finds whose name matches, and if you had a template with the same name
-    in a *different* application, Django would be unable to distinguish between
-    them. We need to be able to point Django at the right one, and the easiest
-    way to ensure this is by *namespacing* them. That is, by putting those
-    templates inside *another* directory named for the application itself.
+    现在我们 *可能* 侥幸地把模板直接放在 ``polls/templates`` 中（而不是创建另一个
+    ``polls`` 子目录），但它实际上是一个坏主意。Django 将选择名字匹配到的第一个模板，
+    如果你在 *不同* 的应用程序中有一个相同名称的模板，Django 将无法区分它们。
+    我们需要能够让 Django 指向正确的一个，确保这一点最简单的方法是为它们命名。
+    也就是说，将这些模板放在为应用程序本身命名的另一个目录中。
 
-Put the following code in that template:
+将以下的代码放入模板中：
 
 .. snippet:: html+django
     :filename: polls/templates/polls/index.html
@@ -199,7 +178,7 @@ Put the following code in that template:
         <p>No polls are available.</p>
     {% endif %}
 
-Now let's update our ``index`` view in ``polls/views.py`` to use the template:
+现在让我们更新 ``polls/views.py`` 中的 ``index`` 视图来使用模板：
 
 .. snippet::
     :filename: polls/views.py
@@ -218,21 +197,18 @@ Now let's update our ``index`` view in ``polls/views.py`` to use the template:
         }
         return HttpResponse(template.render(context, request))
 
-That code loads the template called  ``polls/index.html`` and passes it a
-context. The context is a dictionary mapping template variable names to Python
-objects.
+该代码加载名为 ``polls/index.html`` 的模板，并传给它一个 context。Context 是一个字典，
+将模板变量的名字映射到 Python 对象。
 
-Load the page by pointing your browser at "/polls/", and you should see a
-bulleted-list containing the "What's up" question from :doc:`Tutorial 2
-</intro/tutorial02>`. The link points to the question's detail page.
+通过将浏览器指向“/polls/”来加载页面，您应该看到来自于 :doc:`教程 2 </intro/tutorial02-zh>` 的
+包含“What's up”问题的项目符号列表。该链接指向问题的详细页面。
 
-A shortcut: :func:`~django.shortcuts.render`
+快捷方式： :func:`~django.shortcuts.render`
 --------------------------------------------
 
-It's a very common idiom to load a template, fill a context and return an
-:class:`~django.http.HttpResponse` object with the result of the rendered
-template. Django provides a shortcut. Here's the full ``index()`` view,
-rewritten:
+常见的习惯是载入一个模板，填充一个 context，然后返回一个含有模板渲染结果的
+:class:`~django.http.HttpResponse` 对象。Django 为此提供一个快捷方式。
+下面是重写后的 ``index()`` 视图：
 
 .. snippet::
     :filename: polls/views.py
@@ -247,21 +223,17 @@ rewritten:
         context = {'latest_question_list': latest_question_list}
         return render(request, 'polls/index.html', context)
 
-Note that once we've done this in all these views, we no longer need to import
-:mod:`~django.template.loader` and :class:`~django.http.HttpResponse` (you'll
-want to keep ``HttpResponse`` if you still have the stub methods for ``detail``,
-``results``, and ``vote``).
+注意，一旦我们在所有这些视图中完成这个操作，我们不再需要 import :mod:`~django.template.loader`
+和 ``HttpResponse``（如果您仍然有detail, results 和 vote方法，您将需要保留 ``HttpResponse``）。
 
-The :func:`~django.shortcuts.render` function takes the request object as its
-first argument, a template name as its second argument and a dictionary as its
-optional third argument. It returns an :class:`~django.http.HttpResponse`
-object of the given template rendered with the given context.
+:func:`~django.shortcuts.render` 函数接受 request 对象作为其第一个参数，模板名称作为其第二个参数，
+字典作为其可选的第三个参数。它返回一个使用给定 context渲染后的的模板的
+:class:`~django.http.HttpResponse` 对象。
 
-Raising a 404 error
+抛出 404 错误
 ===================
 
-Now, let's tackle the question detail view -- the page that displays the question text
-for a given poll. Here's the view:
+现在，让我们处理问题详细页面的视图 —— 显示给定投票的问题内容的页面：
 
 .. snippet::
     :filename: polls/views.py
@@ -278,26 +250,23 @@ for a given poll. Here's the view:
             raise Http404("Question does not exist")
         return render(request, 'polls/detail.html', {'question': question})
 
-The new concept here: The view raises the :exc:`~django.http.Http404` exception
-if a question with the requested ID doesn't exist.
+这里的新概念：如果请求的问题ID不存在，则该视图引发 :exc:`~django.http.Http404` 异常。
 
-We'll discuss what you could put in that ``polls/detail.html`` template a bit
-later, but if you'd like to quickly get the above example working, a file
-containing just:
+我们将在以后讨论可以在 ``polls/detail.html`` 模板中放些什么，但如果你想快点运行上面的例子，
+仅仅需要：
 
 .. snippet:: html+django
     :filename: polls/templates/polls/detail.html
 
     {{ question }}
 
-will get you started for now.
+现在可以运行了。
 
-A shortcut: :func:`~django.shortcuts.get_object_or_404`
+快捷方式： :func:`~django.shortcuts.get_object_or_404`
 -------------------------------------------------------
 
-It's a very common idiom to use :meth:`~django.db.models.query.QuerySet.get`
-and raise :exc:`~django.http.Http404` if the object doesn't exist. Django
-provides a shortcut. Here's the ``detail()`` view, rewritten:
+一种常见的习惯是使用 :meth:`~django.db.models.query.QuerySet.get` 并在对象不存在时抛出
+:exc:`~django.http.Http404`。Django 为此提供一个快捷方式。下面是重写后的 ``detail()`` 视图：
 
 .. snippet::
     :filename: polls/views.py
@@ -310,36 +279,32 @@ provides a shortcut. Here's the ``detail()`` view, rewritten:
         question = get_object_or_404(Question, pk=question_id)
         return render(request, 'polls/detail.html', {'question': question})
 
-The :func:`~django.shortcuts.get_object_or_404` function takes a Django model
-as its first argument and an arbitrary number of keyword arguments, which it
-passes to the :meth:`~django.db.models.query.QuerySet.get` function of the
-model's manager. It raises :exc:`~django.http.Http404` if the object doesn't
-exist.
+:func:`~django.shortcuts.get_object_or_404` 函数将一个Django模型作为它的第一个参数，
+把任意数量的关键字参数作为它的第二个参数，它会把这些关键字参数传递给模型管理器中的
+:meth:`~django.db.models.query.QuerySet.get` 函数。如果对象不存在，它就抛出一个
+:exc:`~django.http.Http404` 异常。
 
-.. admonition:: Philosophy
+.. admonition:: 哲学
 
-    Why do we use a helper function :func:`~django.shortcuts.get_object_or_404`
-    instead of automatically catching the
-    :exc:`~django.core.exceptions.ObjectDoesNotExist` exceptions at a higher
-    level, or having the model API raise :exc:`~django.http.Http404` instead of
-    :exc:`~django.core.exceptions.ObjectDoesNotExist`?
+    为什么我们要使用一个辅助函数 :func:`~django.shortcuts.get_object_or_404`，而不是
+    在更高层自动捕获 :exc:`~django.core.exceptions.ObjectDoesNotExist` 异常，或者让模型
+    API 抛出 :exc:`~django.http.Http404` 而不是
+    :exc:`~django.core.exceptions.ObjectDoesNotExist`？
+    
+    因为那样做将会使模型层与视图层耦合在一起。Django最重要的一个设计目标就是保持松耦合。
+    一些可控的耦合将会在 :mod:`django.shortcuts` 模块中介绍。
 
-    Because that would couple the model layer to the view layer. One of the
-    foremost design goals of Django is to maintain loose coupling. Some
-    controlled coupling is introduced in the :mod:`django.shortcuts` module.
+还有一个 :func:`~django.shortcuts.get_list_or_404` 函数，它的工作方式类似
+:func:`~django.shortcuts.get_object_or_404`  —— 差别在于它使用
+:meth:`~django.db.models.query.QuerySet.filter` 而不是
+:meth:`~django.db.models.query.QuerySet.get`。如果列表为空则抛出
+:exc:`~django.http.Http404`。
 
-There's also a :func:`~django.shortcuts.get_list_or_404` function, which works
-just as :func:`~django.shortcuts.get_object_or_404` -- except using
-:meth:`~django.db.models.query.QuerySet.filter` instead of
-:meth:`~django.db.models.query.QuerySet.get`. It raises
-:exc:`~django.http.Http404` if the list is empty.
-
-Use the template system
+使用模板系统
 =======================
 
-Back to the ``detail()`` view for our poll application. Given the context
-variable ``question``, here's what the ``polls/detail.html`` template might look
-like:
+回到我们投票应用的 ``detail()`` 视图。给定上下文变量 ``question``，下面是
+``polls/detail.html`` 模板可能的样子：
 
 .. snippet:: html+django
     :filename: polls/templates/polls/detail.html
@@ -351,42 +316,36 @@ like:
     {% endfor %}
     </ul>
 
-The template system uses dot-lookup syntax to access variable attributes. In
-the example of ``{{ question.question_text }}``, first Django does a dictionary lookup
-on the object ``question``. Failing that, it tries an attribute lookup -- which
-works, in this case. If attribute lookup had failed, it would've tried a
-list-index lookup.
+模板系统使用点查找语法访问变量属性。在 ``{{ question.question_text }}`` 的示例中，
+首先Django对对象 ``question`` 进行字典查找。如果查找失败，它尝试属性查找 ——
+这种情况在示例中生效。如果属性查找失败，它将尝试列表索引查找。
 
-Method-calling happens in the :ttag:`{% for %}<for>` loop:
-``question.choice_set.all`` is interpreted as the Python code
-``question.choice_set.all()``, which returns an iterable of ``Choice`` objects and is
-suitable for use in the :ttag:`{% for %}<for>` tag.
+方法调用发生在 :ttag:`{% for %}<for>` 循环中： ``question.choice_set.all`` 被解释为
+Python 代码 ``question.choice_set.all()``，它返回一个由 ``Choice`` 对象组成的可迭代对象，
+并将其用于 :ttag:`{% for %}<for>` 标签。
 
-See the :doc:`template guide </topics/templates>` for more about templates.
+阅读 :doc:`模板指南 </topics/templates>` 来了解更多关于模板的信息。
 
-Removing hardcoded URLs in templates
+移除模板中硬编码的URLs
 ====================================
 
-Remember, when we wrote the link to a question in the ``polls/index.html``
-template, the link was partially hardcoded like this:
+记住，我们在 ``polls/index.html`` 模板中编写一个指向问题的链接时，链接中一部分是硬编码的：
 
 .. code-block:: html+django
 
     <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
 
-The problem with this hardcoded, tightly-coupled approach is that it becomes
-challenging to change URLs on projects with a lot of templates. However, since
-you defined the name argument in the :func:`~django.conf.urls.url` functions in
-the ``polls.urls`` module, you can remove a reliance on specific URL paths
-defined in your url configurations by using the ``{% url %}`` template tag:
+这种硬编码、紧耦合的方法有一个问题，就是如果我们想在拥有许多模板文件的项目中修改URLs，
+会变得非常麻烦。但是，因为你在 ``polls.urls`` 模块的 :func:`~django.conf.urls.url` 函数中
+定义了命名参数，你就可以通过使用 ``{% url %}`` 模板标签来移除在 URL 配置中定义的特定的
+URL 路径的依赖：
 
 .. code-block:: html+django
 
     <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
 
-The way this works is by looking up the URL definition as specified in the
-``polls.urls`` module. You can see exactly where the URL name of 'detail' is
-defined below::
+它的工作原理是在 ``polls.urls`` 模块里查找指定的 URL 的定义。你可以看到名为“detail”的 URL
+的准确定义：
 
     ...
     # the 'name' value as called by the {% url %} template tag
@@ -396,24 +355,24 @@ defined below::
 If you want to change the URL of the polls detail view to something else,
 perhaps to something like ``polls/specifics/12/`` instead of doing it in the
 template (or templates) you would change it in ``polls/urls.py``::
+如果你想把投票详细视图中的 URL 改成其它样子，比如 ``polls/specifics/12/``，那么不必在该模板
+（或者多个模板）中修改它，而只需修改 ``polls/urls.py``::
 
     ...
     # added the word 'specifics'
     url(r'^specifics/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     ...
 
-Namespacing URL names
+URL 名称的命名空间
 ======================
 
-The tutorial project has just one app, ``polls``. In real Django projects,
-there might be five, ten, twenty apps or more. How does Django differentiate
-the URL names between them? For example, the ``polls`` app has a ``detail``
-view, and so might an app on the same project that is for a blog. How does one
-make it so that Django knows which app view to create for a url when using the
-``{% url %}`` template tag?
+教程中的这个项目只有一个应用 ``polls``。在真实的 Django 项目中，可能会有五个、十个、二十个
+或者更多的应用。 Django 如何区分它们的 URL 名称呢？ 例如，``polls`` 应用具有一个 ``detail``
+视图，相同项目中的博客应用可能也有这样一个视图。当使用模板标签 ``{% url %}`` 时，人们该如何做
+才能使得 Django 知道为一个 URL 对应哪个应用的视图？
 
-The answer is to add namespaces to your  URLconf. In the ``polls/urls.py``
-file, go ahead and add an ``app_name`` to set the application namespace:
+答案是在 URLconf 中添加命名空间。在 ``polls/urls.py`` 文件中，在开头添加 ``app_name``
+来设置应用的命名空间：
 
 .. snippet::
     :filename: polls/urls.py
@@ -430,19 +389,19 @@ file, go ahead and add an ``app_name`` to set the application namespace:
         url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     ]
 
-Now change your ``polls/index.html`` template from:
+现在将 ``polls/index.html`` 模板从：
 
 .. snippet:: html+django
     :filename: polls/templates/polls/index.html
 
     <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
 
-to point at the namespaced detail view:
+修改为指向命名空间详细视图：
 
 .. snippet:: html+django
     :filename: polls/templates/polls/index.html
 
     <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
 
-When you're comfortable with writing views, read :doc:`part 4 of this tutorial
-</intro/tutorial04>` to learn about simple form processing and generic views.
+当你掌握了编写视图，阅读 :doc:`本教程的第4部分 </intro/tutorial04-zh>` 来学习简单的表单处理和
+通用视图。
