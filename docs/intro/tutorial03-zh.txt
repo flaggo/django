@@ -2,47 +2,41 @@
 编写你的第一个Django应用, 第3部分
 =====================================
 
-This tutorial begins where :doc:`Tutorial 2 </intro/tutorial02>` left off. We're
-continuing the Web-poll application and will focus on creating the public
-interface -- "views."
+本教程上接 :doc:`教程 2 </intro/tutorial02-zh>`。我们将继续开发网页投票应用，主要讲
+如何创建一个对用户开放的界面 —— “视图”。
 
-Overview
+概览
 ========
 
-A view is a "type" of Web page in your Django application that generally serves
-a specific function and has a specific template. For example, in a blog
-application, you might have the following views:
+视图是 Django 应用中的一“类”网页，它通常使用一个特定的函数提供服务，并且具有一个特定的模板。
+例如，在博客应用中，可能有以下视图：
 
-* Blog homepage -- displays the latest few entries.
+* 博客首页 —— 显示最新发表的博客；
 
-* Entry "detail" page -- permalink page for a single entry.
+* 博客“详细”页面 —— 每博客的链接页面；
 
-* Year-based archive page -- displays all months with entries in the
-  given year.
+* 基于年份的归档页面 —— 显示特定年内所有月份发表过的博客；
 
-* Month-based archive page -- displays all days with entries in the
-  given month.
+* 基于月份的归档页面 —— 显示特定月份内每天发表过博客；
 
-* Day-based archive page -- displays all entries in the given day.
+* 基于日期的归档页面 —— 显示特定日期内发表过的所有博客；
 
-* Comment action -- handles posting comments to a given entry.
+* 评论：处理针对某篇博客发布的评论。
 
-In our poll application, we'll have the following four views:
+在我们的投票应用中，我们将建立下面的四个视图：
 
-* Question "index" page -- displays the latest few questions.
+* 问题首页 —— 显示最新发布的几个问题；
 
-* Question "detail" page -- displays a question text, with no results but
-  with a form to vote.
+* 问题“详细”页面 —— 显示单个问题的具体内容，提供一个投票的表单，但不显示该议题的
+  当前投票结果；
 
-* Question "results" page -- displays results for a particular question.
+* 问题“结果”页面 —— 显示特定的问题的投票结果；
 
-* Vote action -- handles voting for a particular choice in a particular
-  question.
+* 投票功能 —— 处理对问题中选项的投票。
 
-In Django, web pages and other content are delivered by views. Each view is
-represented by a simple Python function (or method, in the case of class-based
-views). Django will choose a view by examining the URL that's requested (to be
-precise, the part of the URL after the domain name).
+在 Django 中，网站的页面和其他内容都是由视图来传递的。每个视图都是由一个简单的
+Python 函数（或者是基于类的视图方法）表示。Django 通过对比请求的 URL（确切地说，
+是域名后面的部分URL）来选择对应的视图。
 
 Now in your time on the web you may have come across such beauties as
 "ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B".
