@@ -38,25 +38,20 @@
 Python 函数（或者是基于类的视图方法）表示。Django 通过对比请求的 URL（确切地说，
 是域名后面的部分URL）来选择对应的视图。
 
-Now in your time on the web you may have come across such beauties as
-"ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B".
-You will be pleased to know that Django allows us much more elegant
-*URL patterns* than that.
+平时你上网的时候可能会遇到像 “ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B” 这种如此美丽的 URL。
+但你会很高兴地知道 Django 允许我们使用更加优雅的 *URL 模式*。
 
-A URL pattern is simply the general form of a URL - for example:
-``/newsarchive/<year>/<month>/``.
+URL 模式就是 URL 的一种简单通用格式 —— 比如: ``/newsarchive/<year>/<month>/``。
 
-To get from a URL to a view, Django uses what are known as 'URLconfs'. A
-URLconf maps URL patterns (described as regular expressions) to views.
+Django 通过 “URLconfs” 从 URL 获取到视图。而 URLconf 是将 URL 模式（由正则表达式来描述的）
+映射到视图。
 
-This tutorial provides basic instruction in the use of URLconfs, and you can
-refer to :mod:`django.urls` for more information.
+本教程中介绍了使用 URLconfs 的基本指令，你可以查阅 :mod:`django.urls` 来获取更多信息。
 
-Writing more views
+编写更多的视图
 ==================
 
-Now let's add a few more views to ``polls/views.py``. These views are
-slightly different, because they take an argument:
+现在，让我们在 ``polls/views.py`` 加点视图。这些视图会有稍许不同，因为它们需要参数：
 
 .. snippet::
     :filename: polls/views.py
@@ -71,8 +66,7 @@ slightly different, because they take an argument:
     def vote(request, question_id):
         return HttpResponse("You're voting on question %s." % question_id)
 
-Wire these new views into the ``polls.urls`` module by adding the following
-:func:`~django.conf.urls.url` calls:
+通过添加下列 :func:`~django.conf.urls.url` 调用，将这些新的视图加入到 ``polls.urls`` 模块中：
 
 .. snippet::
     :filename: polls/urls.py
