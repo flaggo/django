@@ -2,163 +2,133 @@
 编写你的第一个Django应用, 第5部分
 =====================================
 
-This tutorial begins where :doc:`Tutorial 4 </intro/tutorial04>` left off.
-We've built a Web-poll application, and we'll now create some automated tests
-for it.
+本教程上接 :doc:`教程 4 </intro/tutorial04-zh>`。我们已经开发了网页投票应用，现在
+为它创建一些自动化测试。
 
-Introducing automated testing
+自动化测试介绍
 =============================
 
-What are automated tests?
+什么是自动化测试？
 -------------------------
 
-Tests are simple routines that check the operation of your code.
+测试是检查代码操作的简单例行程序。
 
-Testing operates at different levels. Some tests might apply to a tiny detail
-(*does a particular model method return values as expected?*) while others
-examine the overall operation of the software (*does a sequence of user inputs
-on the site produce the desired result?*). That's no different from the kind of
-testing you did earlier in :doc:`Tutorial 2 </intro/tutorial02>`, using the
-:djadmin:`shell` to examine the behavior of a method, or running the
-application and entering data to check how it behaves.
+测试分为不同的级别。有些测试可能用于某个细节（*比如特定的模型方法是否返回预期的值？*），
+而其他测试是检查软件的整体操作（*比如站点上一系列用户的输入是否产生期望的结果？*）。
+这和 :doc:`教程 2 </intro/tutorial02-zh>` 中的测试是无异的，使用 :djadmin:`shell` 
+来检查方法的行为，或者运行应用程序并输入数据来检查它的行为。
 
-What's different in *automated* tests is that the testing work is done for
-you by the system. You create a set of tests once, and then as you make changes
-to your app, you can check that your code still works as you originally
-intended, without having to perform time consuming manual testing.
+*自动化* 测试的不同之处在于测试工作是由系统帮您完成的。您创建一组测试，然后在对应用进行更改时，
+您可以检查代码是否仍然按照原始的方式工作，而无需执行耗时的手动测试。
 
-Why you need to create tests
+为什么需要自动化测试
 ----------------------------
 
-So why create tests, and why now?
+那么为什么创建测试，为什么是现在？
 
-You may feel that you have quite enough on your plate just learning
-Python/Django, and having yet another thing to learn and do may seem
-overwhelming and perhaps unnecessary. After all, our polls application is
-working quite happily now; going through the trouble of creating automated
-tests is not going to make it work any better. If creating the polls
-application is the last bit of Django programming you will ever do, then true,
-you don't need to know how to create automated tests. But, if that's not the
-case, now is an excellent time to learn.
+你可能感觉学习 Python/Django 已经足够了，再去学习其他的东西也许需要付出巨大的努力而且没有必要，
+毕竟我们的投票应用已经愉快地运行起来了。与其花时间去做自动化测试还不如改进现在的应用。如果
+学习 Django 就是仅仅是为了创建一个小小投票应用，那么涉足自动化测试显然没有必要。但如果不是这样，
+现在是一个很好的学习机会。
 
-Tests will save you time
+测试可以节约时间
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Up to a certain point, 'checking that it seems to work' will be a satisfactory
-test. In a more sophisticated application, you might have dozens of complex
-interactions between components.
+某种程度上，“检查能工作”似乎是种比较满意的测试结果。但在一些复杂的应用中，你会发现组件之间
+存在各种各样复杂的交互关系。
 
-A change in any of those components could have unexpected consequences on the
-application's behavior. Checking that it still 'seems to work' could mean
-running through your code's functionality with twenty different variations of
-your test data just to make sure you haven't broken something - not a good use
-of your time.
+这些组件有任何小的的更改都有可能会对应用程序的行为产生意想不到的后果。要检查它仍“能工作”，
+可能意味着你需要使用二十种不同的测试数据来测试你的代码，而这仅仅是为了确保你没有做错某些事
+—— 这不值得你花时间。
 
-That's especially true when automated tests could do this for you in seconds.
-If something's gone wrong, tests will also assist in identifying the code
-that's causing the unexpected behavior.
+而自动化测试只需要数秒就可以完成以上的任务。如果出现了错误，还能够帮助找出引发这个异常行为的
+代码。
 
-Sometimes it may seem a chore to tear yourself away from your productive,
-creative programming work to face the unglamorous and unexciting business
-of writing tests, particularly when you know your code is working properly.
+有时候你可能会觉得编写测试程序相比起有价值的、创造性的编程工作显得单调乏味、无趣，
+尤其是当你的代码工作正常时。
 
-However, the task of writing tests is a lot more fulfilling than spending hours
-testing your application manually or trying to identify the cause of a
-newly-introduced problem.
+但是，比起用几个小时的时间来手动测试你的程序，或者试图找出代码中一个新生问题的原因，
+编写自动化测试程序的性价比还是很高的。
 
-Tests don't just identify problems, they prevent them
+测试可以发现并防止问题
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's a mistake to think of tests merely as a negative aspect of development.
+将测试看做只是开发中消极的一面是错误的。
 
-Without tests, the purpose or intended behavior of an application might be
-rather opaque. Even when it's your own code, you will sometimes find yourself
-poking around in it trying to find out what exactly it's doing.
+没有测试，应用程序的目的或预期行为可能是相当不透明的。即使这是你自己的代码，你也会发现
+自己都不知道它在做什么。
 
-Tests change that; they light up your code from the inside, and when something
-goes wrong, they focus light on the part that has gone wrong - *even if you
-hadn't even realized it had gone wrong*.
+测试可以改变这一情况；它们使你的代码内部变得明晰，当错误出现后，它们会明确地指出哪部分
+代码出了问题 —— *甚至你自己都没意识到出现了问题*。
 
-Tests make your code more attractive
+测试使您的代码更受欢迎
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You might have created a brilliant piece of software, but you will find that
-many other developers will simply refuse to look at it because it lacks tests;
-without tests, they won't trust it. Jacob Kaplan-Moss, one of Django's
-original developers, says "Code without tests is broken by design."
+你可能已经创建了一个堪称辉煌的软件，但是你会发现许多其他的开发者会由于它缺少测试程序而
+拒绝查看它；没有测试程序，他们不会信任它。Django最初的几个开发者之一 Jacob Kaplan-Moss 说过：“没有测试的代码是设计上的错误”。
 
-That other developers want to see tests in your software before they take it
-seriously is yet another reason for you to start writing tests.
+你需要开始编写测试的另一个原因就是其他的开发者在他们认真研读你的代码前可能想要查看一下
+它有没有测试。
 
-Tests help teams work together
+测试有助于团队合作
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The previous points are written from the point of view of a single developer
-maintaining an application. Complex applications will be maintained by teams.
-Tests guarantee that colleagues don't inadvertently break your code (and that
-you don't break theirs without knowing). If you want to make a living as a
-Django programmer, you must be good at writing tests!
+之前的观点是从单个开发人员来维护一个程序这个方向来阐述的。复杂的应用将会被一个团队来维护。
+测试能够减少同事在无意间破坏你的代码的情况（以及你在不知情的情况下破坏别人的代码的情况）。
+如果你想作为Django程序员生活，你必须擅于编写测试！
 
-Basic testing strategies
+基本的测试策略
 ========================
 
-There are many ways to approach writing tests.
+编写测试程序有很多种方法。
 
-Some programmers follow a discipline called "`test-driven development`_"; they
-actually write their tests before they write their code. This might seem
-counter-intuitive, but in fact it's similar to what most people will often do
-anyway: they describe a problem, then create some code to solve it. Test-driven
-development simply formalizes the problem in a Python test case.
+一些程序员遵循一种叫做“`测试驱动开发`_”的规则；他们在编写代码前会先写好测试。这看起来似乎
+有点反人类，但实际上它与大多数人经常的做法很相似：先描述一个问题，然后编写代码来解决它。
+测试驱动开发可以简单地在 Python 测试用例中将问题格式化。
 
-More often, a newcomer to testing will create some code and later decide that
-it should have some tests. Perhaps it would have been better to write some
-tests earlier, but it's never too late to get started.
+很多时候，刚接触测试的人会先编写一些代码，再编写一些测试。事实上，更早编写一些测试会好一点，
+但不管怎么说什么时候开始都不算晚。
 
-Sometimes it's difficult to figure out where to get started with writing tests.
-If you have written several thousand lines of Python, choosing something to
-test might not be easy. In such a case, it's fruitful to write your first test
-the next time you make a change, either when you add a new feature or fix a bug.
+有时候你很难决定从什么时候开始编写测试。如果你已经编写了数千行 Python 代码，挑选它们中的
+一些来进行测试是不太容易的。这种情况下，在下次你对代码进行变更，添加一个新功能或者修复一个
+bug 时，编写你的第一个测试，效果会非常好。下面，
 
-So let's do that right away.
+让我们马上行动吧。
 
-.. _test-driven development: https://en.wikipedia.org/wiki/Test-driven_development
+.. _测试驱动开发: https://en.wikipedia.org/wiki/Test-driven_development
 
-Writing our first test
+编写我们的第一个测试
 ======================
 
-We identify a bug
+发现bug
 -----------------
 
-Fortunately, there's a little bug in the ``polls`` application for us to fix
-right away: the ``Question.was_published_recently()`` method returns ``True`` if
-the ``Question`` was published within the last day (which is correct) but also if
-the ``Question``’s ``pub_date`` field is in the future (which certainly isn't).
+很巧，在我们的 ``投票`` 应用中有一个小 bug 需要修改：当 ``Question`` 在最近的一天发布时,
+``Question.was_published_recently()`` 返回True（这是正确的），然而当 ``Question`` 的
+``pub_date`` 字段是未来的日期时也返回True（这是错误的）。
 
-To check if the bug really exists, using the Admin create a question whose date
-lies in the future and check the method using the :djadmin:`shell`::
+要检查该 bug 是否真的存在，使用 Admin 创建一个未来的日期，并使用 :djadmin:`shell` 检查::
 
     >>> import datetime
     >>> from django.utils import timezone
     >>> from polls.models import Question
-    >>> # create a Question instance with pub_date 30 days in the future
+    >>> # 创建一个pub_date在30天之后的Question实例
     >>> future_question = Question(pub_date=timezone.now() + datetime.timedelta(days=30))
-    >>> # was it published recently?
+    >>> # 它最近发布了吗？
     >>> future_question.was_published_recently()
     True
 
-Since things in the future are not 'recent', this is clearly wrong.
+由于“将来”不等于“最近”，这显然是错的。
 
-Create a test to expose the bug
+创建一个测试来暴露bug
 -------------------------------
 
-What we've just done in the :djadmin:`shell` to test for the problem is exactly
-what we can do in an automated test, so let's turn that into an automated test.
+我们在 :djadmin:`shell` 中测试 bug 所做的也能在自动化测试中做到，让我们将之变为自动化测试吧。
 
-A conventional place for an application's tests is in the application's
-``tests.py`` file; the testing system will automatically find tests in any file
-whose name begins with ``test``.
+通常，我们会把测试代码放在应用的 ``tests.py`` 文件中；测试系统将自动地从任何名字以
+``test`` 开头的文件中查找测试。
 
-Put the following in the ``tests.py`` file in the ``polls`` application:
+将下面的代码放入 ``投票`` 应用的 ``tests.py`` 文件中：
 
 .. snippet::
     :filename: polls/tests.py
@@ -182,10 +152,9 @@ Put the following in the ``tests.py`` file in the ``polls`` application:
             future_question = Question(pub_date=time)
             self.assertIs(future_question.was_published_recently(), False)
 
-What we have done here is created a :class:`django.test.TestCase` subclass
-with a method that creates a ``Question`` instance with a ``pub_date`` in the
-future. We then check the output of ``was_published_recently()`` - which
-*ought* to be False.
+我们在这里创建了一个 :class:`django.test.TestCase` 的子类，它的一个方法创建一个
+``Question`` 实例， 其参数 ``pub_date`` 是未来的时间。最后我们检查
+``was_published_recently()`` 的输出，它 *应该* 是 False。
 
 Running tests
 -------------

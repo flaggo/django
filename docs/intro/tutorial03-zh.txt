@@ -1,5 +1,5 @@
 =====================================
-编写你的第一个Django应用, 第3部分
+编写您的第一个Django应用, 第3部分
 =====================================
 
 本教程上接 :doc:`教程 2 </intro/tutorial02-zh>`。我们将继续开发网页投票应用，主要讲
@@ -38,15 +38,15 @@
 Python 函数（或者是基于类的视图方法）表示。Django 通过对比请求的 URL（确切地说，
 是域名后面的部分URL）来选择对应的视图。
 
-平时你上网的时候可能会遇到像 “ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B” 这种如此美丽的 URL。
-但你会很高兴地知道 Django 允许我们使用更加优雅的 *URL 模式*。
+平时您上网的时候可能会遇到像 “ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B” 这种如此美丽的 URL。
+但您会很高兴地知道 Django 允许我们使用更加优雅的 *URL 模式*。
 
 URL 模式就是 URL 的一种简单通用格式 —— 比如: ``/newsarchive/<year>/<month>/``。
 
 Django 通过 “URLconfs” 从 URL 获取到视图。而 URLconf 是将 URL 模式（由正则表达式来描述的）
 映射到视图。
 
-本教程中介绍了使用 URLconfs 的基本指令，你可以查阅 :mod:`django.urls` 来获取更多信息。
+本教程中介绍了使用 URLconfs 的基本指令，您可以查阅 :mod:`django.urls` 来获取更多信息。
 
 编写更多的视图
 ==================
@@ -86,7 +86,7 @@ Django 通过 “URLconfs” 从 URL 获取到视图。而 URLconf 是将 URL �
         url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     ]
 
-现在去浏览器中访问“/polls/34/”。它将运行 ``detail()`` 方法，然后在页面中显示你在
+现在去浏览器中访问“/polls/34/”。它将运行 ``detail()`` 方法，然后在页面中显示您在
 url里提供的ID。尝试访问“/polls/34/results/”和“/polls/34/vote/” —— 它们将分别
 显示预设结果和投票页面。
 
@@ -103,8 +103,8 @@ url里提供的ID。尝试访问“/polls/34/results/”和“/polls/34/vote/”
 该模式匹配到的文本，并将其作为参数发送到视图函数; ``?P<question_id>`` 定义用于标识匹配到的
 模式的名字； ``[0-9]+`` 是匹配一串数字的正则表达。
 
-因为 URL 模式是正则表达式，你如何使用它们没有什么限制。不需要添加像 ``.html`` 这样繁琐的URL 
-—— 除非你执意这么做，在这种情况下你可以这样做::
+因为 URL 模式是正则表达式，您如何使用它们没有什么限制。不需要添加像 ``.html`` 这样繁琐的URL 
+—— 除非您执意这么做，在这种情况下您可以这样做::
 
     url(r'^polls/latest\.html$', views.index),
 
@@ -114,10 +114,10 @@ url里提供的ID。尝试访问“/polls/34/results/”和“/polls/34/vote/”
 ======================================
 
 每个视图函数只负责处理两件事中的一件：返回一个包含所请求页面内容的 :class:`~django.http.HttpResponse`
-对象，或者抛出一个诸如 :exc:`~django.http.Http404` 的异常。该如何去做这两件事，就看你自己的想法了。
+对象，或者抛出一个诸如 :exc:`~django.http.Http404` 的异常。该如何去做这两件事，就看您自己的想法了。
 
 您的视图可以从数据库读取记录，也可以不读取。它可以使用模板系统，如 Django 的或第三方Python模板系统，
-或着不使用。它可以使用任何你想要的Python库，生成 PDF 文件，输出 XML，即时创建 ZIP 文件，和任何你想要的。
+或着不使用。它可以使用任何您想要的Python库，生成 PDF 文件，输出 XML，即时创建 ZIP 文件，和任何您想要的。
 
 Django只要求返回的是 :class:`~django.http.HttpResponse`，或者是个异常。
 
@@ -139,11 +139,11 @@ Django只要求返回的是 :class:`~django.http.HttpResponse`，或者是个异
 
     # 保持其他的视图（detail, results, vote）不变
 
-这里有一个问题：页面的设计被硬编码在视图中。 如果你想更改页面的外观，就得编辑这段 Python 代码。
+这里有一个问题：页面的设计被硬编码在视图中。 如果您想更改页面的外观，就得编辑这段 Python 代码。
 因此，让我们来使用 Django 的模板系统，通过创建一个可被视图使用的模板，将页面的设计从
 Python 中分离出来。
 
-首先，在你的 ``polls`` 目录下创建一个叫做 ``templates`` 的目录。Django将在这里查找模板。
+首先，在您的 ``polls`` 目录下创建一个叫做 ``templates`` 的目录。Django将在这里查找模板。
 
 项目中的 :setting:`TEMPLATES` 配置描述了 Django 如何加载和渲染模板。默认的配置文件配置
 ``DjangoTemplates``，其 :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` 被设置为True。
@@ -151,7 +151,7 @@ Python 中分离出来。
 查找名为“templates”的子目录。
 
 在刚刚创建的 ``templates`` 目录中，创建另一个名为 ``polls`` 的目录，并在里面创建一个名为
-``index.html`` 的文件。换句话说，你的模板应该是 ``polls/templates/polls/index.html``。
+``index.html`` 的文件。换句话说，您的模板应该是 ``polls/templates/polls/index.html``。
 由于 ``app_directories`` 模板加载器如上所述工作，因此您可以在 Django 中简单地引用此模板为
 ``polls/index.html``。
 
@@ -159,7 +159,7 @@ Python 中分离出来。
 
     现在我们 *可能* 侥幸地把模板直接放在 ``polls/templates`` 中（而不是创建另一个
     ``polls`` 子目录），但它实际上是一个坏主意。Django 将选择名字匹配到的第一个模板，
-    如果你在 *不同* 的应用程序中有一个相同名称的模板，Django 将无法区分它们。
+    如果您在 *不同* 的应用程序中有一个相同名称的模板，Django 将无法区分它们。
     我们需要能够让 Django 指向正确的一个，确保这一点最简单的方法是为它们命名。
     也就是说，将这些模板放在为应用程序本身命名的另一个目录中。
 
@@ -252,7 +252,7 @@ Python 中分离出来。
 
 这里的新概念：如果请求的问题ID不存在，则该视图引发 :exc:`~django.http.Http404` 异常。
 
-我们将在以后讨论可以在 ``polls/detail.html`` 模板中放些什么，但如果你想快点运行上面的例子，
+我们将在以后讨论可以在 ``polls/detail.html`` 模板中放些什么，但如果您想快点运行上面的例子，
 仅仅需要：
 
 .. snippet:: html+django
@@ -336,15 +336,15 @@ Python 代码 ``question.choice_set.all()``，它返回一个由 ``Choice`` 对�
     <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
 
 这种硬编码、紧耦合的方法有一个问题，就是如果我们想在拥有许多模板文件的项目中修改URLs，
-会变得非常麻烦。但是，因为你在 ``polls.urls`` 模块的 :func:`~django.conf.urls.url` 函数中
-定义了命名参数，你就可以通过使用 ``{% url %}`` 模板标签来移除在 URL 配置中定义的特定的
+会变得非常麻烦。但是，因为您在 ``polls.urls`` 模块的 :func:`~django.conf.urls.url` 函数中
+定义了命名参数，您就可以通过使用 ``{% url %}`` 模板标签来移除在 URL 配置中定义的特定的
 URL 路径的依赖：
 
 .. code-block:: html+django
 
     <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
 
-它的工作原理是在 ``polls.urls`` 模块里查找指定的 URL 的定义。你可以看到名为“detail”的 URL
+它的工作原理是在 ``polls.urls`` 模块里查找指定的 URL 的定义。您可以看到名为“detail”的 URL
 的准确定义：
 
     ...
@@ -355,7 +355,7 @@ URL 路径的依赖：
 If you want to change the URL of the polls detail view to something else,
 perhaps to something like ``polls/specifics/12/`` instead of doing it in the
 template (or templates) you would change it in ``polls/urls.py``::
-如果你想把投票详细视图中的 URL 改成其它样子，比如 ``polls/specifics/12/``，那么不必在该模板
+如果您想把投票详细视图中的 URL 改成其它样子，比如 ``polls/specifics/12/``，那么不必在该模板
 （或者多个模板）中修改它，而只需修改 ``polls/urls.py``::
 
     ...
@@ -403,5 +403,5 @@ URL 名称的命名空间
 
     <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
 
-当你掌握了编写视图，阅读 :doc:`本教程的第4部分 </intro/tutorial04-zh>` 来学习简单的表单处理和
+当您掌握了编写视图，阅读 :doc:`本教程的第4部分 </intro/tutorial04-zh>` 来学习简单的表单处理和
 通用视图。
