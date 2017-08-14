@@ -2,21 +2,16 @@
 编写你的第一个Django应用, 第7部分
 =====================================
 
-This tutorial begins where :doc:`Tutorial 6 </intro/tutorial06>` left off. We're
-continuing the Web-poll application and will focus on customizing Django's
-automatically-generated admin site that we first explored in :doc:`Tutorial 2
-</intro/tutorial02>`.
+本教程上接 :doc:`教程 6 </intro/tutorial06-zh>`。我们将继续完成网页投票应用，并着重讲解
+如何用 Django 自动生成管理网站，我们曾在 :doc:`教程 2</intro/tutorial02-zh>` 中初次探索过。
 
-Customize the admin form
+自定义管理表单
 ========================
 
-By registering the ``Question`` model with ``admin.site.register(Question)``,
-Django was able to construct a default form representation. Often, you'll want
-to customize how the admin form looks and works. You'll do this by telling
-Django the options you want when you register the object.
+通过 ``admin.site.register(Question)`` 注册 ``Question`` 后，Django 可以自动构建一个
+默认的表单。通常，您想自定义管理表单的外观和功能。你可以在注册时通过配置来实现。
 
-Let's see how this works by reordering the fields on the edit form. Replace
-the ``admin.site.register(Question)`` line with:
+现在先来试试排序表单上的字段。将 ``admin.site.register(Question)`` 所在行替换为：
 
 .. snippet::
     :filename: polls/admin.py
@@ -31,21 +26,17 @@ the ``admin.site.register(Question)`` line with:
 
     admin.site.register(Question, QuestionAdmin)
 
-You'll follow this pattern -- create a model admin class, then pass it as the
-second argument to ``admin.site.register()`` -- any time you need to change the
-admin options for a model.
+你可以参照上面的形式 —— 创建一个模型管理类，将之作为第二个参数传入 ``admin.site.register()``。
+而且这种操作在任何时候都可以进行。
 
-This particular change above makes the "Publication date" come before the
-"Question" field:
+经过上面修改，“Publication date”字段会在“Question”字段之前：
 
 .. image:: _images/admin07.png
    :alt: Fields have been reordered
 
-This isn't impressive with only two fields, but for admin forms with dozens
-of fields, choosing an intuitive order is an important usability detail.
+目前的表单只有两个字段可能看不出什么，但是对于字段很多的表单，设计一个直观合理的排序方式非常重要。
 
-And speaking of forms with dozens of fields, you might want to split the form
-up into fieldsets:
+并且在字段数据很多时，还可以将表单分割成多个字段的集合：
 
 .. snippet::
     :filename: polls/admin.py
@@ -63,23 +54,21 @@ up into fieldsets:
 
     admin.site.register(Question, QuestionAdmin)
 
-The first element of each tuple in
-:attr:`~django.contrib.admin.ModelAdmin.fieldsets` is the title of the fieldset.
-Here's what our form looks like now:
+:attr:`~django.contrib.admin.ModelAdmin.fieldsets` 中的每个元组的第一个元素是字段集合的标题。
+它让表单看起来像下面的样子：
 
 .. image:: _images/admin08t.png
    :alt: Form has fieldsets now
 
-Adding related objects
+添加关联对象
 ======================
 
-OK, we have our Question admin page, but a ``Question`` has multiple
-``Choice``\s, and the admin page doesn't display choices.
+现在我们有了问题管理页面，但是一个 ``Question`` 有多个 ``Choice``，而管理页面并没有显示。
 
-Yet.
+暂时。
 
-There are two ways to solve this problem. The first is to register ``Choice``
-with the admin just as we did with ``Question``. That's easy:
+现在有两个方法可以解决这个问题：一是就像刚刚 ``Question`` 一样也将 ``Choice`` 注册到管理界面。
+这简单:
 
 .. snippet::
     :filename: polls/admin.py
@@ -90,30 +79,23 @@ with the admin just as we did with ``Question``. That's easy:
     # ...
     admin.site.register(Choice)
 
-Now "Choices" is an available option in the Django admin. The "Add choice" form
-looks like this:
+现在“Choice”也可以管理页面看到了，其中“Add choice”表单应该类似这样:
 
 .. image:: _images/admin09.png
    :alt: Choice admin page
 
-In that form, the "Question" field is a select box containing every question in the
-database. Django knows that a :class:`~django.db.models.ForeignKey` should be
-represented in the admin as a ``<select>`` box. In our case, only one question
-exists at this point.
+在这个表单中，“Question”字段是一个选择框，包含了当前数据库中每个问题实例。Django 知道将
+:class:`~django.db.models.ForeignKey` 展示为一个 ``<select>`` 框。在我们的例子中，目前
+只有一个问题对象存在。
 
-Also note the "Add Another" link next to "Question." Every object with a
-``ForeignKey`` relationship to another gets this for free. When you click "Add
-Another", you'll get a popup window with the "Add question" form. If you add a question
-in that window and click "Save", Django will save the question to the database and
-dynamically add it as the selected choice on the "Add choice" form you're
-looking at.
+请注意“Add Another”连接到“Question”。每一个包含 ``外键（ForeignKey）` 关系的对象都会有这个。
+当你点击“Add Another”时，会弹出一个“Add question”的表单窗口。如果在窗口中添加了问题并点击“Save”，
+Django 会将问题保存在数据库中，并动态地把它添加为“Add choice”表单的选项。
 
-But, really, this is an inefficient way of adding ``Choice`` objects to the system.
-It'd be better if you could add a bunch of Choices directly when you create the
-``Question`` object. Let's make that happen.
+但是，实话说，这种将 ``Choice`` 对象添加到系统的方式效率不高。如果在创建 ``Question`` 对象时
+直接添加一些 Choice 则会更好。让我们实现它。
 
-Remove the ``register()`` call for the ``Choice`` model. Then, edit the ``Question``
-registration code to read:
+删除 ``Choice`` 模型对 ``register()`` 方法的调用。然后，编辑 ``Question`` 的注册代码如下：
 
 .. snippet::
     :filename: polls/admin.py
@@ -137,30 +119,26 @@ registration code to read:
 
     admin.site.register(Question, QuestionAdmin)
 
-This tells Django: "``Choice`` objects are edited on the ``Question`` admin page. By
-default, provide enough fields for 3 choices."
+上面的代码告诉 Django：“ ``Choice`` 对象在 ``Question`` 管理页面进行编辑，默认情况，为3个选项
+提供了足够的字段。”
 
-Load the "Add question" page to see how that looks:
+载入“Add question”页面来看变成了什么样：
 
 .. image:: _images/admin10t.png
    :alt: Add question page now has choices on it
 
-It works like this: There are three slots for related Choices -- as specified
-by ``extra`` -- and each time you come back to the "Change" page for an
-already-created object, you get another three extra slots.
+它的工作原理如下：有3个插槽用于相关的选择 —— 由 ``extra`` 指定 —— 每当你回到已创建的对象的
+“Change” 页面，你会再获得三个额外的插槽。
 
-At the end of the three current slots you will find an "Add another Choice"
-link.  If you click on it, a new slot will be added. If you want to remove the
-added slot, you can click on the X to the top right of the added slot. Note
-that you can't remove the original three slots. This image shows an added slot:
+在三个当前插槽的最后，您将找到一个“Add another Choice”的链接。如果您点击它，将会添加一个新插槽。
+如果要删除添加的插槽，可以单击添加插槽右上方的 X。请注意，您不能删除原来的三个插槽。
+此图片显示所添加的插槽：
 
 .. image:: _images/admin14t.png
    :alt: Additional slot added dynamically
 
-One small problem, though. It takes a lot of screen space to display all the
-fields for entering related ``Choice`` objects. For that reason, Django offers a
-tabular way of displaying inline related objects; you just need to change
-the ``ChoiceInline`` declaration to read:
+不过还有个小问题，它需要大量的屏幕空间来显示所有的用于输入相关 ``Choice`` 对象的字段。为此，
+Django 提供了一个显示内联相关对象的表格方式;你只需要改变 ``ChoiceInline`` 声明如下：
 
 .. snippet::
     :filename: polls/admin.py
