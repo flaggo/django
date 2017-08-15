@@ -4,9 +4,9 @@
 快速安装指南
 ===================
 
-您必须安装好 Django 才能使用它，我们有一个涵盖了所有安装细节的
-:doc:`安装完全指南 </topics/install>`
-本指南会带你完成满足本次教程所需的最简、最小化安装。
+您必须安装好 Django 才能使用它，我们提供了一个涵盖了所有细节的
+:doc:`安装完全指南 </topics/install>` 。
+通过本节教程会带您完成满足本次教程所需的最简、最小化安装。
 
 安装Python
 ==============
@@ -38,27 +38,24 @@ Django 作为一个 Python Web 框架，必须依赖 Python 。
 =================
 
 这个步骤仅在您希望使用一些诸如 PostgreSQL 、 MySQL 、 Oracle 等“重量级”的数据库时才需要被执行。
-要安装这类数据库，请参考 :ref:`database installation information <database-installation>` 。
+要安装这类数据库，请参考 :ref:`数据库安装信息 <database-installation>` 。
 
 删除旧版 Django
 =================================
 
-如果您正在从一个旧版的 Django 升级到新版，请在安装新版前通过 :ref:`uninstall the old Django version before installing the new
-version <removing-old-versions-of-django>` 了解进一步详情。
+如果您正在从一个旧版的 Django 升级到新版， :ref:`请在安装新版 Django 前先删除旧版本 <removing-old-versions-of-django>` 。
 
 安装 Django
 ==============
 
 您可以通过下列三种途径轻松地完成 Django 的安装：
   
-* :ref:`Install an official release <installing-official-release>`. 
-  这是最推荐大部分用户采用的安装方式。
+* :ref:`安装官方发行版 <installing-official-release>` 是最推荐大部分用户采用的安装方式。
 
-* 通过 :ref:`provided by your operating system
-  distribution <installing-distribution-package>` 安装指定版本的 Django 。
+* 通过 :ref:`安装操作系统提供的发行版 <installing-distribution-package>` 得到指定版本的 Django 。
 
-* :ref:`Install the latest development version
-  <installing-development-version>`. 这种方式适合追求最新功能的开发者们，并且不担心
+* :ref:`安装最新开发版
+  <installing-development-version>` 这种方式适合追求最新功能的开发者们，并且不担心
   功能不稳定。 您可能在使用 Django 开发版时遇到 bug ，请报告它们以帮助 Django 变得更好。
   此外，相比较稳定版，第三方包可能对开发版本的 Django 提供更弱的兼容支持。
 
@@ -84,4 +81,4 @@ version <removing-old-versions-of-django>` 了解进一步详情。
 结束
 ==========
 
-您现在可以阅读 :doc:`move onto the tutorial </intro/tutorial01>` 。
+您现在可以阅读 :doc:`教程的下一步 </intro/tutorial01-zh>` 。
