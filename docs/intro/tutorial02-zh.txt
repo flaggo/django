@@ -636,9 +636,5 @@ http://127.0.0.1:8000/admin/ 。您应该可以看到如下的管理登录界面
 .. image:: _images/admin06t.png
    :alt: History page for question object
 
-When you're comfortable with the models API and have familiarized yourself with
-the admin site, read :doc:`part 3 of this tutorial</intro/tutorial03>` to learn
-about how to add more views to our polls app.
-
 如果您已经熟悉这套模型 API 的操作和管理站点的使用，请阅读 :doc:`本教程的第三部分 </intro/tutorial03>`
 来学习如何为我们的投票应用添加更多的视图。
