@@ -19,10 +19,10 @@
 如果您希望使用其他数据库，安装合适的 :ref:`数据库绑定 <database-installation>`
 并改变 :setting:`DATABASES` ``'default'`` 一项来配置您的数据库连接方式：
 
-* :setting:`ENGINE <DATABASE-ENGINE>` -- Either
+* :setting:`ENGINE <DATABASE-ENGINE>` -- 您可以选择
   ``'django.db.backends.sqlite3'``,
   ``'django.db.backends.postgresql'``,
-  ``'django.db.backends.mysql'``, or
+  ``'django.db.backends.mysql'``, 或者
   ``'django.db.backends.oracle'``. 其他的 backend 请看 :ref:`also available
   <third-party-notes>`.
 
@@ -31,7 +31,7 @@
   ``os.path.join(BASE_DIR, 'db.sqlite3')`` ，会在您的项目目录中创建文件。
 
 如果您没有使用 SQLite 作为数据库，一些额外的配置如 :setting:`USER` 、 :setting:`PASSWORD` 、
-and :setting:`HOST` 需要您填写。请查看关于 :setting:`DATABASES` 的文档获取进一步的信息。
+以及 :setting:`HOST` 需要您填写。请查看关于 :setting:`DATABASES` 的文档获取进一步的信息。
 
 .. admonition:: 使用 SQLite 以外的数据库
 
