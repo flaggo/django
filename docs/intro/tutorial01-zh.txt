@@ -99,8 +99,6 @@ Django详细选项设置和应用特性配置。
 开发服务器
 ======================
 
-Let's verify your Django project works. Change into the outer :file:`mysite` directory, if
-you haven't already, and run the following commands:
 让我们来验证您的Django项目是否工作。从外层 :file:`mysite` 目录切换进去，若准备好了就运行如下命令：
 
 .. code-block:: console
