@@ -352,9 +352,6 @@ URL 路径的依赖：
     url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     ...
 
-If you want to change the URL of the polls detail view to something else,
-perhaps to something like ``polls/specifics/12/`` instead of doing it in the
-template (or templates) you would change it in ``polls/urls.py``::
 如果您想把投票详细视图中的 URL 改成其它样子，比如 ``polls/specifics/12/``，那么不必在该模板
 （或者多个模板）中修改它，而只需修改 ``polls/urls.py``::
 
