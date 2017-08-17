@@ -121,7 +121,7 @@ url里提供的ID。尝试访问“/polls/34/results/”和“/polls/34/vote/”
 
 Django只要求返回的是 :class:`~django.http.HttpResponse`，或者是个异常。
 
-为了方便，让我们使用 Django 自身的数据库 API，在 :doc:`Tutorial 2 </intro/tutorial02-zh>`
+为了方便，让我们使用 Django 自身的数据库 API，在 :doc:`教程 2 </intro/tutorial02-zh>`
 有所提及。下面是一个新的 ``index()`` 视图，它显示系统中最新发布的5条投票问题记录，用逗号分隔：
 
 .. snippet::
