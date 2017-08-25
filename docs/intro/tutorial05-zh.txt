@@ -389,7 +389,6 @@ Django 提供了一个测试客户端 :class:`~django.test.Client` 用来模拟�
 
     def create_question(question_text, days):
         """
-        in the past, positive for questions that have yet to be published).
         创建问题有2个参数，一个是问题的文本内容 `question_text`，另外一个是发布时间相对
         当前时间的偏移天数 `days` （负值表示发布日期在过去，正值表示发布日期在将来）。
         """
