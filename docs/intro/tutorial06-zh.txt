@@ -90,5 +90,5 @@ Django 的配置项 :setting:`STATICFILES_FINDERS` 包含了一个需要如何�
 和 :doc:` 静态资源文件指南  </ref/contrib/staticfiles>` 。如果想了解如何将您的静态资源文件发不到
 真实的服务器上请阅读 :doc:` 部署静态资源文件 </howto/static-files/deployment>` 。
 
-如果您对静态资源文件已经建立了初步印象，请阅读 :doc:` 第7部分 </intro/tutorial07>` 来了解
+如果您对静态资源文件已经建立了初步印象，请阅读 :doc:` 第7部分 </intro/tutorial07-zh>` 来了解
 如何定制我们自动生成的管理站点。

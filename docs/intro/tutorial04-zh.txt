@@ -282,5 +282,5 @@ ListView 而言，自动生成的变量名是 ``question_list`` 。为此我们�
 
 对通用视图更详细的细节，请阅读 :doc:`通用视图文档 </topics/class-based-views/index>` 。
 
-当您熟悉了表单和通用视图后，请阅读 :doc:`本教程的第5部分 </intro/tutorial05>` 来学习如何测试
+当您熟悉了表单和通用视图后，请阅读 :doc:`本教程的第5部分 </intro/tutorial05-zh>` 来学习如何测试
 您的投票应用。
