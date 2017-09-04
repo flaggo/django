@@ -88,7 +88,7 @@
 :class:`~django.db.models.ForeignKey` 展示为一个 ``<select>`` 框。在我们的例子中，目前
 只有一个问题对象存在。
 
-请注意“Add Another”连接到“Question”。每一个包含 ``外键（ForeignKey）` 关系的对象都会有这个。
+请注意“Add Another”连接到“Question”。每一个包含 ``外键（ForeignKey）`` 关系的对象都会有这个。
 当您点击“Add Another”时，会弹出一个“Add question”的表单窗口。如果在窗口中添加了问题并点击“Save”，
 Django 会将问题保存在数据库中，并动态地把它添加为“Add choice”表单的选项。
 
@@ -284,7 +284,7 @@ Django 可以访问的文件系统的任何地方。（Django 可以以您的服
 :setting:`DIRS <TEMPLATES-DIRS>` 是加载 Django 模板时要检查的文件系统目录的列表;
 它是一个搜索路径。
 
-.. admonition:: Organizing templates
+.. admonition:: 组织模板
 
     就像静态文件一样，我们 *可以* 将所有的模板放在一个大的模板目录中，并且工作得很好。
     但是，属于特定应用程序的模板应该放在该应用程序的模板目录（例如 ``polls/templates`` ）中，
@@ -315,9 +315,9 @@ Django 可以访问的文件系统的任何地方。（Django 可以以您的服
 :attr:`django.contrib.admin.AdminSite.site_header` 属性，从而更容易地进行这种定制。
 
 此模板文件包含许多文本，如 ``{% block branding %}`` 和 ``{{ title }}``。 ``{%`` 和
-``{{` `标签是 Django 模板语言的一部分。当 Django 渲染 ``admin/base_site.html`` 时，
+``{{`` 标签是 Django 模板语言的一部分。当 Django 渲染 ``admin/base_site.html`` 时，
 这个模板语言将被应用，以产生最终的 HTML 页面，就像我们在
-:doc:`Tutorial 3 </intro/tutorial03-zh>` 中看到的那样。
+:doc:`教程 3 </intro/tutorial03-zh>` 中看到的那样。
 
 请注意，Django 的任何默认管理模板都可以被覆盖。要覆盖一个模板，只需要使用
 ``base_site.html`` 做同样的事情 —— 将它从默认目录复制到您的自定义目录中并进行更改。
@@ -326,7 +326,7 @@ Django 可以访问的文件系统的任何地方。（Django 可以以您的服
 ------------------------------------------
 
 聪明的读者会问：如果 :setting:`DIRS <TEMPLATES-DIRS>` 默认为空，Django 如何能找到
-默认的管理模板？答案是，由于 :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` 设置为 ``True``，Django 会自动在每个应用程序包中查找 ``templates/`` 的子目录，作为备用（不要忘了``django.contrib.admin`` 是一个应用程序）。
+默认的管理模板？答案是，由于 :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` 设置为 ``True``，Django 会自动在每个应用程序包中查找 ``templates/`` 的子目录，作为备用（不要忘了不要忘了 ``django.contrib.admin`` 是一个应用程序）。
 
 我们的投票应用程序并不复杂，不需要自定义管理模板。但是如果它变得越来越复杂，且需要 Django
 的标准管理模板的一些功能的修改，那么修改 *应用程序的* 模板，而不是 *项目* 中的模板会更加明智。
