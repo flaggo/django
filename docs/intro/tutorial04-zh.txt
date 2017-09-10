@@ -8,9 +8,6 @@
 编写一个简单的表单
 ===================
 
-Let's update our poll detail template ("polls/detail.html") from the last
-tutorial, so that the template contains an HTML ``<form>`` element:
-
 让我们更新上一节的投票详情的模板（ "polls/detail.html" ） ，添加一个 ``<form>`` 元素：
 
 .. snippet:: html+django
