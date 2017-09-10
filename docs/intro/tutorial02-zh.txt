@@ -83,7 +83,7 @@
     :setting:`INSTALLED_APPS` 中的对应行。 :djadmin:`migrate` 命令仅会对
     :setting:`INSTALLED_APPS` 中生效的应用执行迁移。
 
-.. _creating-models:
+.. _creating-models-zh:
 
 创建模型
 ===============
